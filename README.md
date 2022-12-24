@@ -1,9 +1,5 @@
-# base_node_ts
+# Image Processing API
 
-basic `node.js` project with:
-
-- `commonjs` configuration: the type of module used [i.e: use `require()`, `module.exports` for importing and exporting modules].
-- `typeScript` configuration: use of typed java script to ensure no developmental errors.
-- `prettier` configuration: to unify the style of code.
-- `eslint` configuration: to check for errors before build.
-- `jasmine` configuration: for the testing units.
+this is an image processing api that can use in multiple way:
+1. image placeholder service.
+2. image thumbs previewer.
