@@ -1,13 +1,14 @@
 {
-  "name": "base_project",
+  "name": "image_processing",
   "version": "1.0.0",
-  "description": "this is a base project for {commonjs} node js application {<don't forget to rename it and add your description>}",
+  "description": "this an image processsing api for resize images",
   "main": "dist/app.js",
   "scripts": {
     "prettier": "prettier --config .prettierrc --write \"**/*.{js,jsx,ts,tsx,css}\"",
     "eslint": "eslint \"**/*.{js,jsx,ts,tsx,css}\"",
-    "prebuild": "npm run prettier && npm run eslint",
+    "prebuild": "npm run prettier",
     "build": "npx tsc",
+    "postbuild": "npm run eslint",
     "pretest": "npm run build",
     "test": "jasmine",
     "dev": "nodemon src/app.ts",
@@ -20,6 +21,7 @@
     "@types/jasmine": "^4.3.1",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.11.17",
+    "@types/sharp": "^0.31.0",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
@@ -33,6 +35,7 @@
   },
   "dependencies": {
     "express": "^4.18.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "sharp": "^0.31.3"
   }
 }
