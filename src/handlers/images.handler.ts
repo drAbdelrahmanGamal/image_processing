@@ -35,7 +35,7 @@ export const isThumbnailExist = async (thumbnailPath: string) => {
   return await fs.pathExists(path.join(thumblnailsDir, thumbnailPath));
 };
 
-export const fetchImage = async (
+export const prepareImage = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -45,7 +45,6 @@ export const fetchImage = async (
   if (image.width && image.height) {
     const thumbnailPath = getThumbnailPath(image);
     const thumbnailExist = await isThumbnailExist(thumbnailPath);
-    console.log('thumbnailExist :', thumbnailExist);
 
     if (thumbnailExist) {
       res.locals.fetchedImage = path.join(thumblnailsDir, thumbnailPath);

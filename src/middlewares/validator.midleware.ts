@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { isValidImageName } from '../handlers/images.handler';
 
-const validFormats = ['jpg', 'jpeg', 'png'];
 export interface ValidImage {
   name: string;
   format: string;
@@ -16,17 +15,6 @@ export const checkResizeParams = async (
 ): Promise<void> => {
   let validParams: object = {};
   const errors: string[] = [];
-
-  const iamgeFormat = req.query.f
-    ? validFormats.includes(req.query.f as string)
-      ? (req.query.f as string)
-      : 'jpg'
-    : 'jpg';
-
-  validParams = {
-    ...validParams,
-    format: iamgeFormat,
-  };
 
   // check for image name param and its validity
   if (req.query.i) {
@@ -64,6 +52,11 @@ export const checkResizeParams = async (
     res.status(400).send(`(${errors.join(', ')})`);
     return;
   }
+
+  validParams = {
+    ...validParams,
+    format: 'jpg',
+  };
 
   res.locals.validParams = validParams as ValidImage;
   next();

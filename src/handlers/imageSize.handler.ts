@@ -19,16 +19,10 @@ export const resizeImage = async (
   const targetImage = path.join(targetDir, getThumbnailPath(params));
   fs.ensureFileSync(targetImage);
   await image
-    .resize(params.width, params.height, {
-      fit: sharp.fit.fill,
-      withoutEnlargement: false,
-      background: { r: 0, g: 0, b: 0, alpha: 0 },
-      position: sharp.gravity.center,
-    })
+    .resize(params.width, params.height)
     .toFormat(params.format as keyof sharp.FormatEnum)
     .toFile(targetImage)
     .then(() => {
-      console.log('resize done');
       return targetImage;
     })
     .catch((err: Error) => {
