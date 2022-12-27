@@ -1,12 +1,10 @@
 import { Router } from 'express';
-import { check_resize_params } from '../../middlewares/validator.midleware';
+import { fetchImage, openImage } from '../../handlers/images.handler';
+import { checkResizeParams } from '../../middlewares/validator.midleware';
 
 const resizeRouter = Router();
+const handlers = [checkResizeParams, fetchImage, openImage];
 
-resizeRouter.get('/', check_resize_params, (req, res) => {
-  if (res.statusCode == 200) {
-    res.send(`Hello World! from resize route`);
-  }
-});
+resizeRouter.get('/', handlers);
 
 export default resizeRouter;

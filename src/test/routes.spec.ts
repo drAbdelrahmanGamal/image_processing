@@ -19,15 +19,15 @@ describe('Test app endpoints', (): void => {
         supertest(app).get('/images/resize').expect(400, testEnd(done));
       });
 
-      it('should return 400 on /images/resize/?w=400&h=400', (done): void => {
+      it('should return 400 on /images/resize?w=400&h=400', (done): void => {
         supertest(app)
-          .get('/images/resize/?w=400&h=400')
+          .get('/images/resize?w=400&h=400')
           .expect(400, testEnd(done));
       });
 
-      it('should return 200 on /images/resize/?i=01.png&w=400&h=400', (done): void => {
+      it('should return 200 on /images/resize?i=01&w=400&h=400', (done): void => {
         supertest(app)
-          .get('/images/resize/?i=01.png&w=400&h=400')
+          .get('/images/resize?i=01&w=400&h=400')
           .expect(200, testEnd(done));
       });
     });

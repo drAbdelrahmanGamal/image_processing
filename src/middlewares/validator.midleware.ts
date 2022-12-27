@@ -1,23 +1,43 @@
 import { Request, Response, NextFunction } from 'express';
-import { getOriginalImagesNames } from '../handlers/images.handler';
+import { isValidImageName } from '../handlers/images.handler';
 
-const validFormates = ['jpg', 'jpeg', 'png'];
+const validFormats = ['jpg', 'jpeg', 'png'];
+export interface ValidImage {
+  imageName: string;
+  format: string;
+  width?: number;
+  height?: number;
+}
 
-export const check_resize_params = async (
+export const checkResizeParams = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const images: string[] = await getOriginalImagesNames();
   let validParams: object = {};
-  let errors: string[] = [];
+  const errors: string[] = [];
+
+  const iamgeFormat = req.query.f
+    ? validFormats.includes(req.query.f as string)
+      ? (req.query.f as string)
+      : 'jpg' //warnings.push('Invalid format value')
+    : 'jpg';
+
+  validParams = {
+    ...validParams,
+    format: iamgeFormat,
+  };
 
   // check for image name param and its validity
   if (req.query.i) {
-    if (images.includes(req.query.i as string))
+    const imageName: string = req.query.i as string;
+    const imageExist: boolean = await isValidImageName(
+      `${imageName}.${iamgeFormat}`
+    );
+    if (imageExist)
       validParams = {
         ...validParams,
-        image_name: req.query.i as string,
+        imageName: imageName,
       };
     else errors.push('Invalid image name!');
   } else errors.push('No image name provided!');
@@ -42,16 +62,11 @@ export const check_resize_params = async (
     }
   } else errors.push('No width or height provided!');
 
-  if (req.query.f) {
-    if (validFormates.includes(req.query.f as string))
-      validParams = {
-        ...validParams,
-        format: req.query.f as string,
-      };
-    else errors.push('Invalid format value');
+  if (errors.length > 0) {
+    res.status(400).send(`(${errors.join(', ')})`);
+    return;
   }
 
-  if (errors.length > 0) res.status(400).send(`(${errors.join(', ')})`);
-  res.locals.validParams = validParams;
+  res.locals.validParams = validParams as ValidImage;
   next();
 };
