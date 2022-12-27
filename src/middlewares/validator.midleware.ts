@@ -19,7 +19,7 @@ export const checkResizeParams = async (
 
   const iamgeFormat = req.query.f
     ? validFormats.includes(req.query.f as string)
-      ? 'jpg' //(req.query.f as string)
+      ? (req.query.f as string)
       : 'jpg'
     : 'jpg';
 
@@ -35,7 +35,7 @@ export const checkResizeParams = async (
     if (imageExist)
       validParams = {
         ...validParams,
-        imageName: imageName,
+        name: imageName,
       };
     else errors.push('Invalid image name!');
   } else errors.push('No image name provided!');

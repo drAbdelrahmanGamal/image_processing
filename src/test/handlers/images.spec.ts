@@ -10,7 +10,7 @@ describe('Test image handlers', (): void => {
     expect(await isValidImageName('01')).toBeTruthy();
   });
 
-  const testTumbnail = path.join('test_jpg', '400_400.jpg');
+  const testTumbnail = path.join('test', '400_400.jpg');
   it('Get image thumbnail path', (): void => {
     expect(
       getThumbnailPath({
