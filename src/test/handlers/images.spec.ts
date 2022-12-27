@@ -1,20 +1,28 @@
+import path from 'path';
 import {
-  file,
-  getOriginalImages,
-  getOriginalImagesNames,
+  getThumbnailPath,
+  isThumbnailExist,
   isValidImageName,
 } from '../../handlers/images.handler';
 
-describe('Test images handler', (): void => {
-  it('Should return original images', async (): Promise<void> => {
-    const originalImages: file[] = await getOriginalImages();
-    expect(originalImages.length).toBe(4);
+describe('Test image handlers', (): void => {
+  it('Check for "01" image to be exist in original images', async (): Promise<void> => {
+    expect(await isValidImageName('01')).toBeTruthy();
   });
-  it('Should return number of images in original folder to be 4', async (): Promise<void> => {
-    const imagesNames: string[] = await getOriginalImagesNames();
-    expect(imagesNames.length).toBe(4);
+
+  const testTumbnail = path.join('test_jpg', '400_400.jpg');
+  it('Get image thumbnail path', (): void => {
+    expect(
+      getThumbnailPath({
+        name: 'test',
+        format: 'jpg',
+        width: 400,
+        height: 400,
+      })
+    ).toEqual(testTumbnail);
   });
-  it('Shoud check for 01.png to be exist in original images', async (): Promise<void> => {
-    expect(await isValidImageName('01.png')).toBe(true);
+
+  it(`Check for ${testTumbnail} image to be exist in original images`, async (): Promise<void> => {
+    expect(await isThumbnailExist(testTumbnail)).toBeFalsy;
   });
 });

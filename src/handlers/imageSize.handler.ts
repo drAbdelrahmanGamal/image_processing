@@ -4,18 +4,6 @@ import path from 'path';
 import { getThumbnailPath } from './images.handler';
 import { ValidImage } from '../middlewares/validator.midleware';
 
-// const prepareName = (
-//   imageName: string,
-//   size: {
-//     width: number;
-//     height: number;
-//   }
-// ): string => {
-//   return `${imageName.slice(0, imageName.split('.').pop()?.length)}-${
-//     size.width
-//   }-${size.height}`;
-// };
-
 export const resizeImage = async (
   original: string,
   params: ValidImage,

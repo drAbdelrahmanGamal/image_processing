@@ -3,7 +3,7 @@ import { isValidImageName } from '../handlers/images.handler';
 
 const validFormats = ['jpg', 'jpeg', 'png'];
 export interface ValidImage {
-  imageName: string;
+  name: string;
   format: string;
   width?: number;
   height?: number;
@@ -19,8 +19,8 @@ export const checkResizeParams = async (
 
   const iamgeFormat = req.query.f
     ? validFormats.includes(req.query.f as string)
-      ? (req.query.f as string)
-      : 'jpg' //warnings.push('Invalid format value')
+      ? 'jpg' //(req.query.f as string)
+      : 'jpg'
     : 'jpg';
 
   validParams = {
@@ -31,9 +31,7 @@ export const checkResizeParams = async (
   // check for image name param and its validity
   if (req.query.i) {
     const imageName: string = req.query.i as string;
-    const imageExist: boolean = await isValidImageName(
-      `${imageName}.${iamgeFormat}`
-    );
+    const imageExist: boolean = await isValidImageName(imageName);
     if (imageExist)
       validParams = {
         ...validParams,
