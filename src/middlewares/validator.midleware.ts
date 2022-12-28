@@ -8,6 +8,10 @@ export interface ValidImage {
   height: number;
 }
 
+const isValidDimention = (dimention: number): boolean => {
+  return Number.isInteger(dimention) && dimention > 0;
+};
+
 export const checkResizeParams = async (
   req: Request,
   res: Response,
@@ -30,20 +34,22 @@ export const checkResizeParams = async (
 
   // check for width
   if (req.query.w) {
-    if (Number.isInteger(parseInt(req.query.w as string)))
+    const width: number = parseInt(req.query.w as string);
+    if (isValidDimention(width))
       validParams = {
         ...validParams,
-        width: parseInt(req.query.w as string),
+        width: width,
       };
     else errors.push('Invalid width value');
   } else errors.push('No width provided!');
 
   // check for height
   if (req.query.h) {
-    if (Number.isInteger(parseInt(req.query.h as string)))
+    const height: number = parseInt(req.query.h as string);
+    if (isValidDimention(height))
       validParams = {
         ...validParams,
-        height: parseInt(req.query.h as string),
+        height: height,
       };
     else errors.push('Invalid height value');
   } else errors.push('No height provided!');
