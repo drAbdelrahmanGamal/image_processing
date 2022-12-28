@@ -46,6 +46,4 @@ the server will run in port **3000**
 
   > don't forget to replace `image_name` and `width` and `height` in the api url
 
-  > note that you may specify one of the dimentions only and leave the other not specified
-
 valid `image_name` = (01 || 02 || 03 || 04)
